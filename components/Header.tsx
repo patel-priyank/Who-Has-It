@@ -15,7 +15,15 @@ import AboutDialog from './AboutDialog';
 const Header = () => {
   const [aboutDialogOpen, setAboutDialogOpen] = useState<boolean>(false);
 
-  const [theme, setTheme] = useState<string>(() => localStorage.getItem(THEME_STORAGE_KEY) ?? 'system');
+  const [theme, setTheme] = useState<string>('system');
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+
+    if (storedTheme) {
+      setTheme(storedTheme);
+    }
+  }, []);
 
   useEffect(() => {
     const applyTheme = (theme: string) => {
