@@ -30,7 +30,7 @@ const AboutDialog = ({ aboutDialogOpen, setAboutDialogOpen }: AboutDialogProps) 
               <Dialog.Title>About</Dialog.Title>
 
               <Dialog.CloseTrigger asChild position="unset" colorPalette="gray" ref={initialFocusRef}>
-                <IconButton aria-label="Close" variant="outline" size="xs">
+                <IconButton aria-label="Close" variant="outline" size="xs" color="inherit">
                   <LuX />
                 </IconButton>
               </Dialog.CloseTrigger>
