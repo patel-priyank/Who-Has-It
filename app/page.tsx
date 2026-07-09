@@ -3,6 +3,7 @@ import { Box } from '@chakra-ui/react';
 import { Toaster } from '@/components/ui/toaster';
 
 import Header from '@/components/Header';
+import FloatingActionButton from '@/components/FloatingActionButton';
 
 const Home = () => {
   return (
@@ -11,7 +12,7 @@ const Home = () => {
 
       <Toaster />
 
-      {/* Home */}
+      <FloatingActionButton />
     </Box>
   );
 };
