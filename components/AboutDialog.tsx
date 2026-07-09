@@ -12,14 +12,14 @@ interface AboutDialogProps {
 }
 
 const AboutDialog = ({ aboutDialogOpen, setAboutDialogOpen }: AboutDialogProps) => {
-  const initialFocusRef = useRef<HTMLButtonElement | null>(null);
+  const aboutInitialFocusRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <Dialog.Root
       size="sm"
       open={aboutDialogOpen}
       onOpenChange={e => setAboutDialogOpen(e.open)}
-      initialFocusEl={() => initialFocusRef.current}
+      initialFocusEl={() => aboutInitialFocusRef.current}
     >
       <Portal>
         <Dialog.Backdrop backdropFilter="blur(2px)" />
@@ -29,7 +29,7 @@ const AboutDialog = ({ aboutDialogOpen, setAboutDialogOpen }: AboutDialogProps) 
             <Dialog.Header px={6} pt={6} pb={0} gap={4} alignItems="center" justifyContent="space-between">
               <Dialog.Title>About</Dialog.Title>
 
-              <Dialog.CloseTrigger asChild position="unset" colorPalette="gray" ref={initialFocusRef}>
+              <Dialog.CloseTrigger asChild position="unset" colorPalette="gray" ref={aboutInitialFocusRef}>
                 <IconButton aria-label="Close" variant="outline" size="xs" color="inherit">
                   <LuX />
                 </IconButton>
