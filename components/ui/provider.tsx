@@ -2,7 +2,7 @@
 
 import { ChakraProvider, createSystem, defaultConfig } from '@chakra-ui/react';
 
-import { ColorModeProvider, type ColorModeProviderProps } from './color-mode';
+import { ColorModeProvider, type ColorModeProviderProps } from '@/components/ui/color-mode';
 
 const system = createSystem(defaultConfig, {
   globalCss: {
