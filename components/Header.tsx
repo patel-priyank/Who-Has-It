@@ -6,16 +6,22 @@ import Link from 'next/link';
 
 import { Avatar, Box, Flex, Heading, Link as ChakraLink, Menu, Portal, Span, Text } from '@chakra-ui/react';
 
-import { LuBraces, LuHandshake, LuInfo, LuLogIn, LuSquareArrowOutUpRight } from 'react-icons/lu';
+import { LuBraces, LuHandshake, LuInfo, LuLogIn, LuLogOut, LuSquareArrowOutUpRight } from 'react-icons/lu';
 
 import { THEME_STORAGE_KEY, THEMES } from '@/lib/themes';
 
-import AboutDialog from './AboutDialog';
-import SignInDialog from './SignInDialog';
+import AboutDialog from '@/components/AboutDialog';
+import SignInDialog from '@/components/SignInDialog';
+import SignOutDialog from '@/components/SignOutDialog';
+
+import { useUser } from '@/context/UserProvider';
 
 const Header = () => {
+  const { user } = useUser();
+
   const [aboutDialogOpen, setAboutDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
+  const [signOutDialogOpen, setSignOutDialogOpen] = useState<boolean>(false);
 
   const [theme, setTheme] = useState<string>('system');
 
@@ -69,7 +75,7 @@ const Header = () => {
         <Menu.Root variant="solid" positioning={{ placement: 'bottom-end' }}>
           <Menu.Trigger rounded="md" focusRing="outside">
             <Avatar.Root size="sm" shape="rounded">
-              <Avatar.Fallback name="" />
+              <Avatar.Fallback name={user?.email || ''} />
               <Avatar.Image src="#" />
             </Avatar.Root>
           </Menu.Trigger>
@@ -79,15 +85,24 @@ const Header = () => {
               <Menu.Content w="min(75vw, 240px)">
                 <Menu.ItemGroup>
                   <Menu.ItemGroupLabel>
-                    <Text truncate>Local user</Text>
+                    <Text truncate>{user?.email || 'Local user'}</Text>
                   </Menu.ItemGroupLabel>
 
-                  <Menu.Item value="sign-in" onClick={() => setSignInDialogOpen(true)}>
-                    <LuLogIn />
-                    <Span flex={1} mr={4}>
-                      Sign in
-                    </Span>
-                  </Menu.Item>
+                  {user ? (
+                    <Menu.Item value="sign-out" onClick={() => setSignOutDialogOpen(true)}>
+                      <LuLogOut />
+                      <Span flex={1} mr={4}>
+                        Sign out
+                      </Span>
+                    </Menu.Item>
+                  ) : (
+                    <Menu.Item value="sign-in" onClick={() => setSignInDialogOpen(true)}>
+                      <LuLogIn />
+                      <Span flex={1} mr={4}>
+                        Sign in
+                      </Span>
+                    </Menu.Item>
+                  )}
                 </Menu.ItemGroup>
 
                 <Menu.Separator />
@@ -140,6 +155,8 @@ const Header = () => {
       </Flex>
 
       <SignInDialog signInDialogOpen={signInDialogOpen} setSignInDialogOpen={setSignInDialogOpen} />
+
+      <SignOutDialog signOutDialogOpen={signOutDialogOpen} setSignOutDialogOpen={setSignOutDialogOpen} />
 
       <AboutDialog aboutDialogOpen={aboutDialogOpen} setAboutDialogOpen={setAboutDialogOpen} />
     </Box>

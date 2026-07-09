@@ -19,6 +19,8 @@ import { LuX } from 'react-icons/lu';
 import { Dialog } from '@/components/ui/dialog';
 import { Toaster } from '@/components/ui/toaster';
 
+import { useUser } from '@/context/UserProvider';
+
 const MAX_LENGTH_EMAIL = 255;
 const RESEND_OTP_COUNTDOWN = 60;
 
@@ -28,6 +30,8 @@ interface SignInDialogProps {
 }
 
 const SignInDialog = ({ signInDialogOpen, setSignInDialogOpen }: SignInDialogProps) => {
+  const { signIn } = useUser();
+
   const [signInVerificationDialogOpen, setSignInVerificationDialogOpen] = useState<boolean>(false);
 
   const [email, setEmail] = useState<string>('');
@@ -213,6 +217,8 @@ const SignInDialog = ({ signInDialogOpen, setSignInDialogOpen }: SignInDialogPro
 
         return;
       }
+
+      signIn(data.token);
 
       Toaster.create({
         type: 'success',

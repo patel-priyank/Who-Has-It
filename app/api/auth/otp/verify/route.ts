@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { sql } from '@/lib/db';
+import { signToken } from '@/lib/jwt';
 import { verifyOtp } from '@/lib/otp';
 
 export async function POST(req: NextRequest) {
@@ -16,7 +18,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid or expired verification code.' }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true });
+    const [user] = await sql`
+      INSERT INTO users (email)
+      VALUES (${email})
+      ON CONFLICT (email) DO UPDATE SET email = EXCLUDED.email
+      RETURNING id, email, created_at
+    `;
+
+    const token = signToken({ id: user.id, email: user.email, created_at: user.created_at });
+
+    return NextResponse.json({ success: true, token });
   } catch (error) {
     console.error(error);
 
