@@ -4,4 +4,4 @@ export const THEMES = [
   { label: 'Dark', value: 'dark' }
 ];
 
-export const THEME_STORAGE_KEY = 'who-has-it-theme';
+export const THEME_STORAGE_KEY = 'who-has-it:theme';
