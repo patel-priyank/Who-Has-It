@@ -1,8 +1,10 @@
 import { useRef } from 'react';
 
-import { Dialog, IconButton, Portal, Stack, Text } from '@chakra-ui/react';
+import { IconButton, Portal, Stack, Text } from '@chakra-ui/react';
 
 import { LuX } from 'react-icons/lu';
+
+import { Dialog } from '@/components/ui/dialog';
 
 interface AboutDialogProps {
   aboutDialogOpen: boolean;
