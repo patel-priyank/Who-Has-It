@@ -11,9 +11,11 @@ import { LuBraces, LuHandshake, LuInfo, LuLogIn, LuSquareArrowOutUpRight } from 
 import { THEME_STORAGE_KEY, THEMES } from '@/lib/themes';
 
 import AboutDialog from './AboutDialog';
+import SignInDialog from './SignInDialog';
 
 const Header = () => {
   const [aboutDialogOpen, setAboutDialogOpen] = useState<boolean>(false);
+  const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
 
   const [theme, setTheme] = useState<string>('system');
 
@@ -80,7 +82,7 @@ const Header = () => {
                     <Text truncate>Local user</Text>
                   </Menu.ItemGroupLabel>
 
-                  <Menu.Item value="sign-in">
+                  <Menu.Item value="sign-in" onClick={() => setSignInDialogOpen(true)}>
                     <LuLogIn />
                     <Span flex={1} mr={4}>
                       Sign in
@@ -136,6 +138,8 @@ const Header = () => {
           </Portal>
         </Menu.Root>
       </Flex>
+
+      <SignInDialog signInDialogOpen={signInDialogOpen} setSignInDialogOpen={setSignInDialogOpen} />
 
       <AboutDialog aboutDialogOpen={aboutDialogOpen} setAboutDialogOpen={setAboutDialogOpen} />
     </Box>
