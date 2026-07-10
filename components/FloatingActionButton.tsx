@@ -26,7 +26,7 @@ const FloatingActionButton = () => {
   return (
     <Menu.Root variant="solid" positioning={{ placement: 'top-end' }}>
       <Menu.Trigger asChild>
-        <IconButton pos="fixed" bottom={4} right={4} size="xl" shadow="xl">
+        <IconButton aria-label="Add item" pos="fixed" bottom={4} right={4} size="xl" shadow="xl">
           <LuPlus />
         </IconButton>
       </Menu.Trigger>
