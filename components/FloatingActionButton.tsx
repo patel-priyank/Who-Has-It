@@ -4,10 +4,24 @@ import { IconButton, Menu, Portal, Span } from '@chakra-ui/react';
 
 import { LuCircleArrowDown, LuCircleArrowUp, LuPlus } from 'react-icons/lu';
 
-const FloatingActionButton = () => {
-  const handleLendItem = () => {};
+import { Toaster } from '@/components/ui/toaster';
 
-  const handleBorrowItem = () => {};
+const FloatingActionButton = () => {
+  const handleLendItem = () => {
+    Toaster.create({
+      type: 'info',
+      title: 'Under development',
+      description: 'Lend item feature will be available soon.'
+    });
+  };
+
+  const handleBorrowItem = () => {
+    Toaster.create({
+      type: 'info',
+      title: 'Under development',
+      description: 'Borrow item feature will be available soon.'
+    });
+  };
 
   return (
     <Menu.Root variant="solid" positioning={{ placement: 'top-end' }}>
