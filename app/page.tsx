@@ -4,6 +4,7 @@ import { Toast } from '@/components/ui/toaster';
 
 import Header from '@/components/Header';
 import FloatingActionButton from '@/components/FloatingActionButton';
+import ItemTabs from '@/components/ItemTabs';
 
 const Home = () => {
   return (
@@ -13,6 +14,8 @@ const Home = () => {
       <Toast />
 
       <FloatingActionButton />
+
+      <ItemTabs />
     </Box>
   );
 };
