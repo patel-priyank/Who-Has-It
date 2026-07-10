@@ -55,7 +55,8 @@ const SignOutDialog = ({ signOutDialogOpen, setSignOutDialogOpen }: SignOutDialo
             <Dialog.Body p={6}>
               <Stack gap={6}>
                 <Text fontSize="md">
-                  Are you sure you want to sign out? You'll need to sign in again to access your list.
+                  Are you sure you want to sign out? You'll need to sign in again to access your list of lent and
+                  borrowed items.
                 </Text>
               </Stack>
             </Dialog.Body>
