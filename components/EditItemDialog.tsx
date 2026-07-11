@@ -140,7 +140,7 @@ const EditItemDialog = ({ item, editItemDialogOpen, setEditItemDialogOpen }: Edi
 
                         <Input
                           ref={editItemInitialFocusRef}
-                          placeholder={item?.item_name || 'Umbrella'}
+                          placeholder={item?.item_name || ''}
                           value={itemName}
                           onChange={e => setItemName(e.currentTarget.value.slice(0, MAX_LENGTH_ITEM_NAME))}
                           maxLength={MAX_LENGTH_ITEM_NAME}
@@ -157,7 +157,7 @@ const EditItemDialog = ({ item, editItemDialogOpen, setEditItemDialogOpen }: Edi
                         </Field.Label>
 
                         <Input
-                          placeholder={item?.person_name || 'John Doe'}
+                          placeholder={item?.person_name || ''}
                           value={personName}
                           onChange={e => setPersonName(e.currentTarget.value.slice(0, MAX_LENGTH_PERSON_NAME))}
                           maxLength={MAX_LENGTH_PERSON_NAME}
@@ -172,7 +172,7 @@ const EditItemDialog = ({ item, editItemDialogOpen, setEditItemDialogOpen }: Edi
                         <Field.Label>Notes</Field.Label>
 
                         <Textarea
-                          placeholder={item?.notes || 'Has a broken handle'}
+                          placeholder={item?.notes || ''}
                           value={notes}
                           onChange={e => setNotes(e.currentTarget.value.slice(0, MAX_LENGTH_NOTES))}
                           maxLength={MAX_LENGTH_NOTES}
