@@ -27,7 +27,7 @@ const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
     Toaster.create({
       type: 'info',
       title: 'Under development',
-      description: 'Mark item as active feature will be available soon.'
+      description: 'Feature will be available soon.'
     });
   };
 
@@ -35,7 +35,7 @@ const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
     Toaster.create({
       type: 'info',
       title: 'Under development',
-      description: 'Mark item as returned feature will be available soon.'
+      description: 'Feature will be available soon.'
     });
   };
 

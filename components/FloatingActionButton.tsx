@@ -11,7 +11,7 @@ const FloatingActionButton = () => {
     Toaster.create({
       type: 'info',
       title: 'Under development',
-      description: 'Lend item feature will be available soon.'
+      description: 'Feature will be available soon.'
     });
   };
 
@@ -19,7 +19,7 @@ const FloatingActionButton = () => {
     Toaster.create({
       type: 'info',
       title: 'Under development',
-      description: 'Borrow item feature will be available soon.'
+      description: 'Feature will be available soon.'
     });
   };
 
