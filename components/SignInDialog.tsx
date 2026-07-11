@@ -18,6 +18,7 @@ import {
 import { LuX } from 'react-icons/lu';
 
 import { Dialog } from '@/components/ui/dialog';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Toaster } from '@/components/ui/toaster';
 
 import { useUser } from '@/context/UserProvider';
@@ -357,7 +358,7 @@ const SignInDialog = ({ signInDialogOpen, setSignInDialogOpen }: SignInDialogPro
                         Verification code <Field.RequiredIndicator />
                       </Field.Label>
 
-                      <Input
+                      <PasswordInput
                         ref={signInVerificationInitialFocusRef}
                         placeholder="123456"
                         type="number"
