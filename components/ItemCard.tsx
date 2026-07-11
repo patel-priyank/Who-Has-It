@@ -15,7 +15,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 import { Item } from '@/context/ItemsProvider';
 
-import { formatDate } from '@/lib/date';
+import { formatDate, getDaysAgo } from '@/lib/date';
 
 interface ItemCardProps {
   item: Item;
@@ -91,7 +91,9 @@ const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
           ) : (
             <HStack gap={2} color="fg.subtle">
               <LuCircleDashed />
-              <Text lineClamp={1}>Pending</Text>
+              <Text lineClamp={1}>
+                {getDaysAgo(item.lent_at)} day{getDaysAgo(item.lent_at) !== 1 ? 's' : ''} pending
+              </Text>
             </HStack>
           )}
         </Stack>
