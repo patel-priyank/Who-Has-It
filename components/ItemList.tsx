@@ -35,7 +35,13 @@ const ItemList = ({ items, itemsLoading }: ItemListProps) => {
   };
 
   if (itemsLoading) {
-    return <>Loading items</>;
+    return (
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <ItemCard key={index} />
+        ))}
+      </SimpleGrid>
+    );
   }
 
   if (!itemsLoading && items.length === 0) {

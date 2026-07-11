@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Button, Card, HStack, IconButton, Stack, Text } from '@chakra-ui/react';
+import { Badge, Button, Card, HStack, IconButton, Skeleton, Stack, Text } from '@chakra-ui/react';
 
 import {
   LuCircleArrowDown,
@@ -18,14 +18,12 @@ import { Item } from '@/context/ItemsProvider';
 import { formatDate, getDaysAgo } from '@/lib/date';
 
 interface ItemCardProps {
-  item: Item;
-  onViewNotes: () => void;
-  onEditItem: () => void;
+  item?: Item;
+  onViewNotes?: () => void;
+  onEditItem?: () => void;
 }
 
 const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
-  const isReturned = Boolean(item.returned_at);
-
   const handleMarkActive = () => {
     Toaster.create({
       type: 'info',
@@ -46,68 +44,96 @@ const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
     <Card.Root>
       <Card.Body gap={4}>
         <HStack gap={4} justify="space-between">
-          {isReturned ? (
-            <Badge size="md" variant="surface" colorPalette="green">
-              Returned
-            </Badge>
+          {item ? (
+            item.returned_at ? (
+              <Badge size="md" variant="surface" colorPalette="green">
+                Returned
+              </Badge>
+            ) : (
+              <Badge size="md" variant="surface" colorPalette="yellow">
+                {item.is_borrowed ? 'Borrowed' : 'Lent'}
+              </Badge>
+            )
           ) : (
-            <Badge size="md" variant="surface" colorPalette="yellow">
-              {item.is_borrowed ? 'Borrowed' : 'Lent'}
-            </Badge>
+            <Skeleton width="50%" height="32px" />
           )}
 
-          <HStack gap={2}>
-            {item.notes && (
-              <IconButton aria-label="View notes" variant="surface" size="xs" colorPalette="gray" onClick={onViewNotes}>
-                <LuStickyNote />
-              </IconButton>
-            )}
+          {item && (
+            <HStack gap={2}>
+              {item.notes && (
+                <IconButton
+                  aria-label="View notes"
+                  variant="surface"
+                  size="xs"
+                  colorPalette="gray"
+                  onClick={onViewNotes}
+                >
+                  <LuStickyNote />
+                </IconButton>
+              )}
 
-            <IconButton aria-label="Edit item" variant="surface" size="xs" colorPalette="gray" onClick={onEditItem}>
-              <LuPencil />
-            </IconButton>
-          </HStack>
+              <IconButton aria-label="Edit item" variant="surface" size="xs" colorPalette="gray" onClick={onEditItem}>
+                <LuPencil />
+              </IconButton>
+            </HStack>
+          )}
         </HStack>
 
         <Stack gap={1}>
-          <Card.Title lineClamp={1}>{item.item_name}</Card.Title>
+          {item ? <Card.Title lineClamp={1}>{item.item_name}</Card.Title> : <Skeleton width="full" height="28px" />}
 
-          <Text fontSize="md" lineClamp={1} color="fg.subtle">
-            {item.person_name}
-          </Text>
+          {item ? (
+            <Text fontSize="md" lineClamp={1} color="fg.subtle">
+              {item.person_name}
+            </Text>
+          ) : (
+            <Skeleton width="full" height="24px" />
+          )}
         </Stack>
 
         <Stack gap={1} fontSize="sm">
-          <HStack gap={2}>
-            {item.is_borrowed ? <LuCircleArrowDown /> : <LuCircleArrowUp />}
-            <Text lineClamp={1}>{formatDate(item.lent_at)}</Text>
-          </HStack>
-
-          {isReturned ? (
+          {item ? (
             <HStack gap={2}>
-              <LuCircleCheckBig />
-              <Text lineClamp={1}>{formatDate(item.returned_at!)}</Text>
+              {item.is_borrowed ? <LuCircleArrowDown /> : <LuCircleArrowUp />}
+              <Text lineClamp={1}>{formatDate(item.lent_at)}</Text>
             </HStack>
           ) : (
-            <HStack gap={2} color="fg.subtle">
-              <LuCircleDashed />
-              <Text lineClamp={1}>
-                {getDaysAgo(item.lent_at)} day{getDaysAgo(item.lent_at) !== 1 ? 's' : ''} pending
-              </Text>
-            </HStack>
+            <Skeleton width="full" height="21px" />
+          )}
+
+          {item ? (
+            item.returned_at ? (
+              <HStack gap={2}>
+                <LuCircleCheckBig />
+                <Text lineClamp={1}>{formatDate(item.returned_at!)}</Text>
+              </HStack>
+            ) : (
+              <HStack gap={2} color="fg.subtle">
+                <LuCircleDashed />
+                <Text lineClamp={1}>
+                  {getDaysAgo(item.lent_at)} day{getDaysAgo(item.lent_at) !== 1 ? 's' : ''} pending
+                </Text>
+              </HStack>
+            )
+          ) : (
+            <Skeleton width="full" height="21px" />
           )}
         </Stack>
       </Card.Body>
 
       <Card.Footer px={6} pt={0} pb={6}>
-        {isReturned ? (
-          <Button variant="outline" width="full" onClick={handleMarkActive}>
-            Mark as {item.is_borrowed ? 'borrowed' : 'lent'}
-          </Button>
+        {item ? (
+          item.returned_at ? (
+            <Button variant="outline" width="full" onClick={handleMarkActive}>
+              Mark as {item.is_borrowed ? 'borrowed' : 'lent'}
+            </Button>
+          ) : (
+            <Button width="full" onClick={handleMarkReturned}>
+              Mark as returned
+            </Button>
+          )
         ) : (
-          <Button width="full" onClick={handleMarkReturned}>
-            Mark as returned
-          </Button>
+          <Skeleton width="full" height="40px" />
         )}
       </Card.Footer>
     </Card.Root>
