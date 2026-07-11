@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { SimpleGrid } from '@chakra-ui/react';
+import { EmptyState, SimpleGrid, Stack } from '@chakra-ui/react';
+
+import { LuPartyPopper } from 'react-icons/lu';
 
 import EditItemDialog from '@/components/EditItemDialog';
 import ItemCard from '@/components/ItemCard';
@@ -10,9 +12,10 @@ import { Item } from '@/context/ItemsProvider';
 interface ItemListProps {
   items: Item[];
   itemsLoading: boolean;
+  tab: 'lent' | 'borrowed';
 }
 
-const ItemList = ({ items, itemsLoading }: ItemListProps) => {
+const ItemList = ({ items, itemsLoading, tab }: ItemListProps) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [editItemDialogOpen, setEditItemDialogOpen] = useState<boolean>(false);
 
@@ -38,7 +41,22 @@ const ItemList = ({ items, itemsLoading }: ItemListProps) => {
   }
 
   if (!itemsLoading && items.length === 0) {
-    return <>No items</>;
+    return (
+      <EmptyState.Root>
+        <EmptyState.Content>
+          <EmptyState.Indicator>
+            <LuPartyPopper />
+          </EmptyState.Indicator>
+
+          <Stack textAlign="center">
+            <EmptyState.Title>It's all here!</EmptyState.Title>
+            <EmptyState.Description>
+              You haven't {tab === 'lent' ? 'lent out' : 'borrowed'} any items. Start by adding your first item.
+            </EmptyState.Description>
+          </Stack>
+        </EmptyState.Content>
+      </EmptyState.Root>
+    );
   }
 
   return (

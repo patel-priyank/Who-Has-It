@@ -27,11 +27,11 @@ const ItemTabs = () => {
         </Tabs.List>
 
         <Tabs.Content value="lent">
-          <ItemList items={items.filter((item: Item) => !item.is_borrowed)} itemsLoading={itemsLoading} />
+          <ItemList items={items.filter((item: Item) => !item.is_borrowed)} itemsLoading={itemsLoading} tab="lent" />
         </Tabs.Content>
 
         <Tabs.Content value="borrowed">
-          <ItemList items={items.filter((item: Item) => item.is_borrowed)} itemsLoading={itemsLoading} />
+          <ItemList items={items.filter((item: Item) => item.is_borrowed)} itemsLoading={itemsLoading} tab="borrowed" />
         </Tabs.Content>
       </Tabs.Root>
     </Box>
