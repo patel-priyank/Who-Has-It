@@ -29,11 +29,11 @@ const ItemCard = ({ item }: ItemCardProps) => {
       <Card.Body gap={4}>
         <HStack gap={4} justify="space-between">
           {isReturned ? (
-            <Badge size="md" colorPalette="green">
+            <Badge size="md" variant="surface" colorPalette="green">
               Returned
             </Badge>
           ) : (
-            <Badge size="md" colorPalette="yellow">
+            <Badge size="md" variant="surface" colorPalette="yellow">
               {item.is_borrowed ? 'Borrowed' : 'Lent'}
             </Badge>
           )}
