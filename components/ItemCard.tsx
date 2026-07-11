@@ -11,6 +11,8 @@ import {
   LuStickyNote
 } from 'react-icons/lu';
 
+import { Toaster } from '@/components/ui/toaster';
+
 import { Item } from '@/context/ItemsProvider';
 
 import { formatDate } from '@/lib/date';
@@ -23,6 +25,22 @@ interface ItemCardProps {
 
 const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
   const isReturned = Boolean(item.returned_at);
+
+  const handleMarkActive = () => {
+    Toaster.create({
+      type: 'info',
+      title: 'Under development',
+      description: 'Mark item as active feature will be available soon.'
+    });
+  };
+
+  const handleMarkReturned = () => {
+    Toaster.create({
+      type: 'info',
+      title: 'Under development',
+      description: 'Mark item as returned feature will be available soon.'
+    });
+  };
 
   return (
     <Card.Root>
@@ -81,11 +99,13 @@ const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
 
       <Card.Footer px={6} pt={0} pb={6}>
         {isReturned ? (
-          <Button variant="outline" width="full">
+          <Button variant="outline" width="full" onClick={handleMarkActive}>
             Mark as {item.is_borrowed ? 'borrowed' : 'lent'}
           </Button>
         ) : (
-          <Button width="full">Mark as returned</Button>
+          <Button width="full" onClick={handleMarkReturned}>
+            Mark as returned
+          </Button>
         )}
       </Card.Footer>
     </Card.Root>
