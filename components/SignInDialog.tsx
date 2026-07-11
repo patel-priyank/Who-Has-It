@@ -4,6 +4,7 @@ import {
   AbsoluteCenter,
   Button,
   Field,
+  Fieldset,
   Flex,
   IconButton,
   Input,
@@ -271,25 +272,29 @@ const SignInDialog = ({ signInDialogOpen, setSignInDialogOpen }: SignInDialogPro
                       you.
                     </Text>
 
-                    <Field.Root required>
-                      <Field.Label>
-                        Email <Field.RequiredIndicator />
-                      </Field.Label>
+                    <Fieldset.Root>
+                      <Fieldset.Content>
+                        <Field.Root required>
+                          <Field.Label>
+                            Email <Field.RequiredIndicator />
+                          </Field.Label>
 
-                      <Input
-                        ref={signInInitialFocusRef}
-                        placeholder="john.doe@example.com"
-                        type="email"
-                        value={email}
-                        onChange={e => setEmail(e.currentTarget.value.slice(0, MAX_LENGTH_EMAIL))}
-                        maxLength={MAX_LENGTH_EMAIL}
-                        pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                      />
+                          <Input
+                            ref={signInInitialFocusRef}
+                            placeholder="john.doe@example.com"
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.currentTarget.value.slice(0, MAX_LENGTH_EMAIL))}
+                            maxLength={MAX_LENGTH_EMAIL}
+                            pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                          />
 
-                      <Field.HelperText fontVariantNumeric="tabular-nums">
-                        {email.length} / {MAX_LENGTH_EMAIL}
-                      </Field.HelperText>
-                    </Field.Root>
+                          <Field.HelperText fontVariantNumeric="tabular-nums">
+                            {email.length} / {MAX_LENGTH_EMAIL}
+                          </Field.HelperText>
+                        </Field.Root>
+                      </Fieldset.Content>
+                    </Fieldset.Root>
                   </Stack>
                 </Dialog.Body>
 
