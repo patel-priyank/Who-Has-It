@@ -63,11 +63,9 @@ const decodeToken = (token: string): User | null => {
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [items, setItems] = useState<Item[]>([]);
-  const [itemsLoading, setItemsLoading] = useState<boolean>(false);
+  const [itemsLoading, setItemsLoading] = useState<boolean>(true);
 
   const fetchItems = useCallback(async (token: string) => {
-    setItemsLoading(true);
-
     try {
       const res = await fetch('/api/items', {
         headers: { Authorization: `Bearer ${token}` }
