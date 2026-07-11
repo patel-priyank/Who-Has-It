@@ -25,6 +25,7 @@ type UserContextValue = {
   itemsLoading: boolean;
   signIn: (token: string) => void;
   signOut: () => void;
+  updateItem: (item: Item) => void;
 };
 
 const TOKEN_STORAGE_KEY = 'who-has-it:token';
@@ -68,7 +69,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchItems = useCallback(async (token: string) => {
     try {
       const res = await fetch('/api/items', {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       const data = await res.json();
@@ -128,7 +131,15 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     setItems([]);
   }, []);
 
-  return <UserContext.Provider value={{ user, items, itemsLoading, signIn, signOut }}>{children}</UserContext.Provider>;
+  const updateItem = useCallback((item: Item) => {
+    setItems(prev => prev.map(i => (i.id === item.id ? item : i)));
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ user, items, itemsLoading, signIn, signOut, updateItem }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export default UserProvider;

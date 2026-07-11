@@ -8,7 +8,7 @@ import { LuX } from 'react-icons/lu';
 
 import { Toaster } from '@/components/ui/toaster';
 
-import { Item } from '@/context/UserProvider';
+import { Item, useUser } from '@/context/UserProvider';
 
 const MAX_LENGTH_ITEM_NAME = 255;
 const MAX_LENGTH_PERSON_NAME = 100;
@@ -20,6 +20,8 @@ interface EditItemDialogProps {
 }
 
 const EditItemDialog = ({ item, editItemDialogOpen, setEditItemDialogOpen }: EditItemDialogProps) => {
+  const { updateItem } = useUser();
+
   const [itemName, setItemName] = useState<string>('');
   const [personName, setPersonName] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
@@ -39,10 +41,49 @@ const EditItemDialog = ({ item, editItemDialogOpen, setEditItemDialogOpen }: Edi
   const handleSave = async (e: any) => {
     e.preventDefault();
 
+    if (!item) {
+      return;
+    }
+
     setSaving(true);
 
     try {
-      await new Promise(res => setTimeout(res, 1500));
+      const token = localStorage.getItem('who-has-it:token');
+
+      if (!token) {
+        Toaster.create({
+          type: 'error',
+          title: 'Session expired',
+          description: 'You need to sign in again.'
+        });
+
+        setEditItemDialogOpen(false);
+
+        return;
+      }
+
+      const res = await fetch('/api/items', {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: item.id, item_name: itemName, person_name: personName, notes })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        Toaster.create({
+          type: 'error',
+          title: 'Failed to update item',
+          description: data.error ?? 'Please try again.'
+        });
+
+        return;
+      }
+
+      updateItem(data.item);
 
       Toaster.create({
         type: 'success',
