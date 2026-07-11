@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Button, Card, HStack, IconButton, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Badge, Button, Card, HStack, IconButton, Popover, Portal, Skeleton, Stack, Text } from '@chakra-ui/react';
 
 import {
   LuCircleArrowDown,
@@ -19,11 +19,10 @@ import { formatDate, getDaysAgo } from '@/lib/date';
 
 interface ItemCardProps {
   item?: Item;
-  onViewNotes?: () => void;
   onEditItem?: () => void;
 }
 
-const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
+const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
   const handleMarkActive = () => {
     Toaster.create({
       type: 'info',
@@ -61,15 +60,26 @@ const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
           {item && (
             <HStack gap={2}>
               {item.notes && (
-                <IconButton
-                  aria-label="View notes"
-                  variant="surface"
-                  size="xs"
-                  colorPalette="gray"
-                  onClick={onViewNotes}
-                >
-                  <LuStickyNote />
-                </IconButton>
+                <Popover.Root>
+                  <Popover.Trigger asChild>
+                    <IconButton aria-label="View notes" variant="surface" size="xs" colorPalette="gray">
+                      <LuStickyNote />
+                    </IconButton>
+                  </Popover.Trigger>
+
+                  <Portal>
+                    <Popover.Positioner>
+                      <Popover.Content overflow="auto">
+                        <Popover.Body>
+                          <Stack gap={2}>
+                            <Popover.Title fontWeight="semibold">Notes</Popover.Title>
+                            <Text>{item.notes}</Text>
+                          </Stack>
+                        </Popover.Body>
+                      </Popover.Content>
+                    </Popover.Positioner>
+                  </Portal>
+                </Popover.Root>
               )}
 
               <IconButton aria-label="Edit item" variant="surface" size="xs" colorPalette="gray" onClick={onEditItem}>

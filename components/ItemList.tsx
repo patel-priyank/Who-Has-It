@@ -4,7 +4,6 @@ import { SimpleGrid } from '@chakra-ui/react';
 
 import EditItemDialog from '@/components/EditItemDialog';
 import ItemCard from '@/components/ItemCard';
-import NotesDialog from '@/components/NotesDialog';
 
 import { Item } from '@/context/ItemsProvider';
 
@@ -15,19 +14,13 @@ interface ItemListProps {
 
 const ItemList = ({ items, itemsLoading }: ItemListProps) => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-  const [notesDialogOpen, setNotesDialogOpen] = useState<boolean>(false);
   const [editItemDialogOpen, setEditItemDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!notesDialogOpen && !editItemDialogOpen) {
+    if (!editItemDialogOpen) {
       setTimeout(() => setSelectedItem(null), 250);
     }
-  }, [notesDialogOpen, editItemDialogOpen]);
-
-  const handleViewNotes = (item: Item) => {
-    setSelectedItem(item);
-    setNotesDialogOpen(true);
-  };
+  }, [editItemDialogOpen]);
 
   const handleEditItem = (item: Item) => {
     setSelectedItem(item);
@@ -52,16 +45,9 @@ const ItemList = ({ items, itemsLoading }: ItemListProps) => {
     <>
       <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
         {items.map((item: Item) => (
-          <ItemCard
-            key={item.id}
-            item={item}
-            onViewNotes={() => handleViewNotes(item)}
-            onEditItem={() => handleEditItem(item)}
-          />
+          <ItemCard key={item.id} item={item} onEditItem={() => handleEditItem(item)} />
         ))}
       </SimpleGrid>
-
-      <NotesDialog item={selectedItem} notesDialogOpen={notesDialogOpen} setNotesDialogOpen={setNotesDialogOpen} />
 
       <EditItemDialog
         item={selectedItem}
