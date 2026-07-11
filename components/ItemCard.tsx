@@ -19,9 +19,10 @@ import { formatDate } from '@/lib/date';
 
 interface ItemCardProps {
   item: Item;
+  onEditItem: () => void;
 }
 
-const ItemCard = ({ item }: ItemCardProps) => {
+const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
   const isReturned = Boolean(item.returned_at);
 
   return (
@@ -47,7 +48,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
               </Tooltip>
             )}
 
-            <IconButton aria-label="Edit item" variant="surface" size="xs" colorPalette="gray">
+            <IconButton aria-label="Edit item" variant="surface" size="xs" colorPalette="gray" onClick={onEditItem}>
               <LuPencil />
             </IconButton>
           </HStack>
