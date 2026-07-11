@@ -12,6 +12,7 @@ import { Item, useItems } from '@/context/ItemsProvider';
 
 const MAX_LENGTH_ITEM_NAME = 255;
 const MAX_LENGTH_PERSON_NAME = 100;
+const MAX_LENGTH_NOTES = 1000;
 
 interface EditItemDialogProps {
   item: Item | null;
@@ -173,10 +174,15 @@ const EditItemDialog = ({ item, editItemDialogOpen, setEditItemDialogOpen }: Edi
                         <Textarea
                           placeholder=""
                           value={notes}
-                          onChange={e => setNotes(e.currentTarget.value)}
+                          onChange={e => setNotes(e.currentTarget.value.slice(0, MAX_LENGTH_NOTES))}
+                          maxLength={MAX_LENGTH_NOTES}
                           rows={5}
                           resize="vertical"
                         />
+
+                        <Field.HelperText fontVariantNumeric="tabular-nums">
+                          {notes.length} / {MAX_LENGTH_NOTES}
+                        </Field.HelperText>
                       </Field.Root>
                     </Fieldset.Content>
                   </Fieldset.Root>
