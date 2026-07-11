@@ -85,7 +85,7 @@ const Header = () => {
               <Menu.Content w="min(75vw, 240px)">
                 <Menu.ItemGroup>
                   <Menu.ItemGroupLabel>
-                    <Text truncate>{user?.email || 'Local user'}</Text>
+                    <Text lineClamp={1}>{user?.email || 'Local user'}</Text>
                   </Menu.ItemGroupLabel>
 
                   {user ? (

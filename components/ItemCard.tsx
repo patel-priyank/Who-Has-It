@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Button, Card, HStack, IconButton, Span, Stack, Text } from '@chakra-ui/react';
+import { Badge, Button, Card, HStack, IconButton, Stack, Text } from '@chakra-ui/react';
 
 import {
   LuCircleArrowDown,
@@ -11,18 +11,17 @@ import {
   LuStickyNote
 } from 'react-icons/lu';
 
-import { Tooltip } from '@/components/ui/tooltip';
-
 import { Item } from '@/context/UserProvider';
 
 import { formatDate } from '@/lib/date';
 
 interface ItemCardProps {
   item: Item;
+  onViewNotes: () => void;
   onEditItem: () => void;
 }
 
-const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
+const ItemCard = ({ item, onViewNotes, onEditItem }: ItemCardProps) => {
   const isReturned = Boolean(item.returned_at);
 
   return (
@@ -39,13 +38,11 @@ const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
             </Badge>
           )}
 
-          <HStack gap={4}>
+          <HStack gap={2}>
             {item.notes && (
-              <Tooltip content="Note added" showArrow positioning={{ placement: 'top', offset: { mainAxis: 4 } }}>
-                <Span fontSize="xl" color="fg.subtle">
-                  <LuStickyNote />
-                </Span>
-              </Tooltip>
+              <IconButton aria-label="View notes" variant="surface" size="xs" colorPalette="gray" onClick={onViewNotes}>
+                <LuStickyNote />
+              </IconButton>
             )}
 
             <IconButton aria-label="Edit item" variant="surface" size="xs" colorPalette="gray" onClick={onEditItem}>
@@ -55,9 +52,9 @@ const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
         </HStack>
 
         <Stack gap={1}>
-          <Card.Title truncate>{item.item_name}</Card.Title>
+          <Card.Title lineClamp={1}>{item.item_name}</Card.Title>
 
-          <Text fontSize="md" truncate color="fg.subtle">
+          <Text fontSize="md" lineClamp={1} color="fg.subtle">
             {item.person_name}
           </Text>
         </Stack>
@@ -65,18 +62,18 @@ const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
         <Stack gap={1} fontSize="sm">
           <HStack gap={2}>
             {item.is_borrowed ? <LuCircleArrowDown /> : <LuCircleArrowUp />}
-            <Text truncate>{formatDate(item.lent_at)}</Text>
+            <Text lineClamp={1}>{formatDate(item.lent_at)}</Text>
           </HStack>
 
           {isReturned ? (
             <HStack gap={2}>
               <LuCircleCheckBig />
-              <Text truncate>{formatDate(item.returned_at!)}</Text>
+              <Text lineClamp={1}>{formatDate(item.returned_at!)}</Text>
             </HStack>
           ) : (
             <HStack gap={2} color="fg.subtle">
               <LuCircleDashed />
-              <Text truncate>Pending</Text>
+              <Text lineClamp={1}>Pending</Text>
             </HStack>
           )}
         </Stack>
