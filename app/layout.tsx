@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 
 import { Provider } from '@/components/ui/provider';
 
+import ItemsProvider from '@/context/ItemsProvider';
 import UserProvider from '@/context/UserProvider';
 
 import './globals.css';
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={archivo.variable} suppressHydrationWarning>
       <body>
         <Provider>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            <ItemsProvider>{children}</ItemsProvider>
+          </UserProvider>
         </Provider>
         <Analytics />
       </body>

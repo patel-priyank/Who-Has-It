@@ -6,7 +6,7 @@ import { LuX } from 'react-icons/lu';
 
 import { Dialog } from '@/components/ui/dialog';
 
-import { Item } from '@/context/UserProvider';
+import { Item } from '@/context/ItemsProvider';
 
 interface NotesDialogProps {
   item: Item | null;

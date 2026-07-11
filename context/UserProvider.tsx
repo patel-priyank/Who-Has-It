@@ -8,27 +8,13 @@ export type User = {
   created_at: string;
 };
 
-export type Item = {
-  id: string;
-  user_id: string;
-  item_name: string;
-  person_name: string;
-  is_borrowed: boolean;
-  lent_at: string;
-  returned_at: string | null;
-  notes: string | null;
-};
-
 type UserContextValue = {
   user: User | null;
-  items: Item[];
-  itemsLoading: boolean;
   signIn: (token: string) => void;
   signOut: () => void;
-  updateItem: (item: Item) => void;
 };
 
-const TOKEN_STORAGE_KEY = 'who-has-it:token';
+export const TOKEN_STORAGE_KEY = 'who-has-it:token';
 
 const UserContext = createContext<UserContextValue | null>(null);
 
@@ -63,32 +49,6 @@ const decodeToken = (token: string): User | null => {
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [items, setItems] = useState<Item[]>([]);
-  const [itemsLoading, setItemsLoading] = useState<boolean>(true);
-
-  const fetchItems = useCallback(async (token: string) => {
-    try {
-      const res = await fetch('/api/items', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setItems(data.items);
-      } else {
-        setItems([]);
-      }
-    } catch (error) {
-      console.error(error);
-
-      setItems([]);
-    } finally {
-      setItemsLoading(false);
-    }
-  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem(TOKEN_STORAGE_KEY);
@@ -105,41 +65,27 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setUser(decodedUser);
-    fetchItems(token);
-  }, [fetchItems]);
+  }, []);
 
-  const signIn = useCallback(
-    (token: string) => {
-      const decodedUser = decodeToken(token);
+  const signIn = useCallback((token: string) => {
+    const decodedUser = decodeToken(token);
 
-      if (!decodedUser) {
-        return;
-      }
+    if (!decodedUser) {
+      return;
+    }
 
-      localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    localStorage.setItem(TOKEN_STORAGE_KEY, token);
 
-      setUser(decodedUser);
-      fetchItems(token);
-    },
-    [fetchItems]
-  );
+    setUser(decodedUser);
+  }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
 
     setUser(null);
-    setItems([]);
   }, []);
 
-  const updateItem = useCallback((item: Item) => {
-    setItems(prev => prev.map(i => (i.id === item.id ? item : i)));
-  }, []);
-
-  return (
-    <UserContext.Provider value={{ user, items, itemsLoading, signIn, signOut, updateItem }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ user, signIn, signOut }}>{children}</UserContext.Provider>;
 };
 
 export default UserProvider;

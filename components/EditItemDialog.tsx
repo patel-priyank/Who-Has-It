@@ -8,7 +8,7 @@ import { LuX } from 'react-icons/lu';
 
 import { Toaster } from '@/components/ui/toaster';
 
-import { Item, useUser } from '@/context/UserProvider';
+import { Item, useItems } from '@/context/ItemsProvider';
 
 const MAX_LENGTH_ITEM_NAME = 255;
 const MAX_LENGTH_PERSON_NAME = 100;
@@ -20,7 +20,7 @@ interface EditItemDialogProps {
 }
 
 const EditItemDialog = ({ item, editItemDialogOpen, setEditItemDialogOpen }: EditItemDialogProps) => {
-  const { updateItem } = useUser();
+  const { updateItem } = useItems();
 
   const [itemName, setItemName] = useState<string>('');
   const [personName, setPersonName] = useState<string>('');

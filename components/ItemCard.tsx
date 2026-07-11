@@ -11,7 +11,7 @@ import {
   LuStickyNote
 } from 'react-icons/lu';
 
-import { Item } from '@/context/UserProvider';
+import { Item } from '@/context/ItemsProvider';
 
 import { formatDate } from '@/lib/date';
 

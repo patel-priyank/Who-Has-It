@@ -6,7 +6,7 @@ import EditItemDialog from '@/components/EditItemDialog';
 import ItemCard from '@/components/ItemCard';
 import NotesDialog from '@/components/NotesDialog';
 
-import { Item } from '@/context/UserProvider';
+import { Item } from '@/context/ItemsProvider';
 
 interface ItemListProps {
   items: Item[];

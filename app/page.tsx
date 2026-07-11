@@ -2,8 +2,8 @@ import { Box } from '@chakra-ui/react';
 
 import { Toast } from '@/components/ui/toaster';
 
-import Header from '@/components/Header';
 import FloatingActionButton from '@/components/FloatingActionButton';
+import Header from '@/components/Header';
 import ItemTabs from '@/components/ItemTabs';
 
 const Home = () => {

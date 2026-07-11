@@ -6,10 +6,10 @@ import { LuCircleArrowDown, LuCircleArrowUp } from 'react-icons/lu';
 
 import ItemList from '@/components/ItemList';
 
-import { Item, useUser } from '@/context/UserProvider';
+import { Item, useItems } from '@/context/ItemsProvider';
 
 const ItemTabs = () => {
-  const { items, itemsLoading } = useUser();
+  const { items, itemsLoading } = useItems();
 
   return (
     <Box maxW="breakpoint-lg" mx="auto" px={4} pt={4} pb={20}>
