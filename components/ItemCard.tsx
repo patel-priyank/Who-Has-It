@@ -69,7 +69,7 @@ const ItemCard = ({ item, onEditItem }: ItemCardProps) => {
 
                   <Portal>
                     <Popover.Positioner>
-                      <Popover.Content overflow="auto">
+                      <Popover.Content overflow="auto" css={{ '--popover-bg': 'colors.pink.subtle' }}>
                         <Popover.Body>
                           <Stack gap={2}>
                             <Popover.Title fontWeight="semibold">Notes</Popover.Title>
